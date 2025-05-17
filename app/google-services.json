@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "833416572764",
+    "project_id": "equion-9463e",
+    "storage_bucket": "equion-9463e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:833416572764:android:441dffc8845383ef8fdb99",
+        "android_client_info": {
+          "package_name": "com.example.equion"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBosepBrP2XN9VrLYWWuGuGH8onRAK46xw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
