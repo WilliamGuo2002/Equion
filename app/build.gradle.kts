@@ -1,3 +1,5 @@
+def geminiApiKey = project.hasProperty("GEMINI_API_KEY") ? project.GEMINI_API_KEY : ""
+
 plugins {
     alias(libs.plugins.android.application)
     id ("com.google.gms.google-services")
@@ -14,6 +16,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        buildConfigField "String", "GEMINI_API_KEY", "\"${geminiApiKey}\""
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -30,6 +33,8 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+
 }
 
 dependencies {
