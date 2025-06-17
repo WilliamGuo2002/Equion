@@ -1,4 +1,3 @@
-def geminiApiKey = project.hasProperty("GEMINI_API_KEY") ? project.GEMINI_API_KEY : ""
 
 plugins {
     alias(libs.plugins.android.application)
@@ -16,8 +15,13 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        buildConfigField "String", "GEMINI_API_KEY", "\"${geminiApiKey}\""
+        val geminiApiKey: String = project.findProperty("GEMINI_API_KEY") as? String ?: ""
+        buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {

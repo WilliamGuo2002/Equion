@@ -30,7 +30,7 @@ public class ChatActivity extends AppCompatActivity {
     private LinearLayout chatContainer;
     // private static final String API_KEY = "";
     String API_KEY = BuildConfig.GEMINI_API_KEY;
-    private static final String ENDPOINT = "https://generativelanguage.googleapis.com/v1/models/gemini-1.0-flash:generateContent?key=" + API_KEY;
+    private final String ENDPOINT = "https://generativelanguage.googleapis.com/v1/models/gemini-1.0-flash:generateContent?key=" + API_KEY;
     private final OkHttpClient client = new OkHttpClient();
 
     @Override
