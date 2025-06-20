@@ -31,12 +31,12 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        ImageButton backButton = findViewById(R.id.login_back_button);
-        emailEditText = findViewById(R.id.login_email_bar);
-        passwordEditText = findViewById(R.id.login_password_bar);
+        ImageButton backButton = findViewById(R.id.register_back_button);
+        emailEditText = findViewById(R.id.register_email_bar);
+        passwordEditText = findViewById(R.id.register_password_bar);
         rememberMeCheckBox = findViewById(R.id.login_remember_me_checkbox);
         Button createAccountButton = findViewById(R.id.login_create_account_button);
-        Button loginButton = findViewById(R.id.login_login_button);
+        Button loginButton = findViewById(R.id.register_submit_button);
 
         backButton.setOnClickListener(v -> finish());
 
@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                                     controller.initUserIfFirstTime(user.getEmail());
 
                                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    Intent intent = new Intent(LoginActivity.this, MyholdingActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }
