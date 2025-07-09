@@ -37,6 +37,13 @@ public class LoginActivity extends AppCompatActivity {
         rememberMeCheckBox = findViewById(R.id.login_remember_me_checkbox);
         Button createAccountButton = findViewById(R.id.login_create_account_button);
         Button loginButton = findViewById(R.id.register_submit_button);
+        // for beta version, jump to MyholdingActivity directly
+        Button TestButton = findViewById(R.id.login_jump_to_myholding_button);
+        TestButton.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, MyholdingActivity.class);
+            startActivity(intent);
+            finish();
+        });
 
         backButton.setOnClickListener(v -> finish());
 
