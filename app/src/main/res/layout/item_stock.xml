@@ -20,20 +20,25 @@
     <!-- 公司名称 -->
     <TextView
         android:id="@+id/stock_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="Apple Inc."
-        android:textSize="14sp"
         android:textColor="#888888"
-        app:layout_constraintTop_toBottomOf="@id/stock_symbol"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/stock_chart"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/stock_symbol" />
 
     <!-- 当前股价 -->
     <TextView
         android:id="@+id/stock_price"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:gravity="end"
         android:text="189.00 USD"
         android:textStyle="bold"
         android:textSize="16sp"
@@ -57,13 +62,13 @@
         android:id="@+id/stock_chart"
         android:layout_width="100dp"
         android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
         android:adjustViewBounds="true"
         android:contentDescription="Stock Chart"
         android:scaleType="fitCenter"
         android:src="@drawable/samplestockchart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/stock_price"
-        app:layout_constraintStart_toEndOf="@+id/stock_name"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- 横向按钮容器，包含取消和删除按钮 -->

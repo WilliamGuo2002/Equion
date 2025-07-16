@@ -93,8 +93,10 @@
         android:dividerHeight="2dp"
         app:layout_constraintBottom_toTopOf="@+id/news_navbar_layout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/myholding_overall_info_bar" />
+        app:layout_constraintTop_toBottomOf="@id/myholding_overall_info_bar"
+        app:layout_constraintVertical_bias="1.0" />
 
     <LinearLayout
         android:id="@+id/news_navbar_layout"
