@@ -22,6 +22,15 @@ import java.util.Locale;
 public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> {
     private List<StockInfo> stockList;
 
+    // 添加 OnItemClickListener 接口定义
+    public interface OnItemClickListener {
+        void onItemClick(StockInfo stock);
+    }
+    private OnItemClickListener listener;
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
     public StockAdapter(List<StockInfo> stockList) {
         this.stockList = stockList;
     }
@@ -159,6 +168,13 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
         holder.cancelButton.setOnClickListener(v -> {
             stock.swiped = false;
             notifyItemChanged(position);
+        });
+
+        // 添加点击事件
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(stock);
+            }
         });
     }
 

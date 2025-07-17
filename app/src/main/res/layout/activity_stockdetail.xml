@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_gradient">
+    android:background="@drawable/background_gradient"
+    android:fitsSystemWindows="true">
 
     <ImageView
         android:id="@+id/StockDetailActivityBackButton"
@@ -19,19 +21,21 @@
 
     <TextView
         android:id="@+id/StockDetailActivityCompanyName"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="56dp"
-        android:textColor="@color/text_color"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="Company Name"
-        android:textSize="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/text_color"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintEnd_toStartOf="@+id/stockDetailPrice"
         app:layout_constraintStart_toEndOf="@+id/StockDetailActivityBackButton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -55,65 +59,132 @@
             <LinearLayout
                 android:id="@+id/timeFilterButtons"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:background="@drawable/view_background"
                 android:gravity="center"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btn_1d"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="10dp"
-                    android:text="1D" />
+                    android:background="@android:color/transparent"
+                    android:minWidth="48dp"
+                    android:padding="4dp"
+                    android:text="1D"
+                    android:textAllCaps="false"
+                    android:textColor="@color/button_color" />
 
                 <Button
                     android:id="@+id/btn_5d"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="5D" />
+                    android:background="@android:color/transparent"
+                    android:minWidth="48dp"
+                    android:padding="4dp"
+                    android:text="5D"
+                    android:textAllCaps="false"
+                    android:textColor="@color/button_color" />
 
                 <Button
                     android:id="@+id/btn_1m"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="1M" />
+                    android:background="@android:color/transparent"
+                    android:minWidth="48dp"
+                    android:padding="4dp"
+                    android:text="1M"
+                    android:textAllCaps="false"
+                    android:textColor="@color/button_color" />
 
                 <Button
                     android:id="@+id/btn_6m"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="6M" />
+                    android:background="@android:color/transparent"
+                    android:minWidth="48dp"
+                    android:padding="4dp"
+                    android:text="6M"
+                    android:textAllCaps="false"
+                    android:textColor="@color/button_color" />
 
                 <Button
                     android:id="@+id/btn_ytd"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="YTD" />
+                    android:background="@android:color/transparent"
+                    android:minWidth="48dp"
+                    android:padding="4dp"
+                    android:text="YTD"
+                    android:textAllCaps="false"
+                    android:textColor="@color/button_color" />
 
                 <Button
                     android:id="@+id/btn_1y"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="1Y" />
+                    android:background="@android:color/transparent"
+                    android:minWidth="48dp"
+                    android:padding="4dp"
+                    android:text="1Y"
+                    android:textAllCaps="false"
+                    android:textColor="@color/button_color" />
 
                 <Button
                     android:id="@+id/btn_all"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="ALL" />
+                    android:background="@android:color/transparent"
+                    android:minWidth="48dp"
+                    android:padding="4dp"
+                    android:text="ALL"
+                    android:textAllCaps="false"
+                    android:textColor="@color/button_color" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/aiAnalysisTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="AI 分析与交易建议"
+                android:textColor="@color/text_color"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/aiAnalysisContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="（未来将在此处展示基于最新新闻和市场走势生成的交易建议）"
+                android:textColor="@color/text_color"
+                android:textSize="14sp" />
+
+
         </LinearLayout>
+
+
     </ScrollView>
+
+    <TextView
+        android:id="@+id/stockDetailPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:textSize="18sp"
+        android:text="Stock Price"
+        android:textColor="@color/button_color"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

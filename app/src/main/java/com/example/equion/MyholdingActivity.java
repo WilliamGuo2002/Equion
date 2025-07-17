@@ -160,6 +160,17 @@ public class MyholdingActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
+        // 点击列表项进入股票详情页
+        adapter.setOnItemClickListener(new StockAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(StockInfo stock) {
+                Intent intent = new Intent(MyholdingActivity.this, StockDetailActivity.class);
+                intent.putExtra("symbol", stock.symbol);
+                intent.putExtra("name", stock.name);
+                startActivity(intent);
+            }
+        });
+
         // 添加拖拽排序和左滑删除功能
         ItemTouchHelper.SimpleCallback itemTouchCallback = new ItemTouchHelper.SimpleCallback(
                 ItemTouchHelper.UP | ItemTouchHelper.DOWN,
