@@ -21,13 +21,12 @@ import java.util.ArrayList;
 
 import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.data.*;
-import com.example.equion.BuildConfig;
 
 public class StockDetailActivity extends AppCompatActivity {
 
     private CombinedChart combinedChart;
     private TextView aiAnalysisTitle, aiAnalysisContent;
-    private Button btn1d, btn5d, btn1m, btn6m, btnYtd, btn1y, btnAll;
+    private Button btn1d, btn5d, btn1m, btn6m, btnYtd, btn1y, btnAll, btnReload, btnConservative, btnModerate, btnAggressive;
     private ImageButton backButton;
 
     private TextView companyNameText;
@@ -60,13 +59,17 @@ public class StockDetailActivity extends AppCompatActivity {
     private void initViews() {
         combinedChart = findViewById(R.id.stockCombinedChart);
 
-        btn1d = findViewById(R.id.btn_1d);
-        btn5d = findViewById(R.id.btn_5d);
-        btn1m = findViewById(R.id.btn_1m);
-        btn6m = findViewById(R.id.btn_6m);
+        btn1d = findViewById(R.id.btn_conservative);
+        btn5d = findViewById(R.id.btn_moderate);
+        btn1m = findViewById(R.id.btn_aggressive);
+        btn6m = findViewById(R.id.btn_reload);
         btnYtd = findViewById(R.id.btn_ytd);
         btn1y = findViewById(R.id.btn_1y);
         btnAll = findViewById(R.id.btn_all);
+        btnReload = findViewById(R.id.btn_reload);
+        btnConservative = findViewById(R.id.btn_conservative);
+        btnModerate = findViewById(R.id.btn_moderate);
+        btnAggressive = findViewById(R.id.btn_aggressive);
         backButton = findViewById(R.id.StockDetailActivityBackButton);
 
         aiAnalysisTitle = findViewById(R.id.aiAnalysisTitle);
@@ -81,13 +84,13 @@ public class StockDetailActivity extends AppCompatActivity {
             String selectedInterval = "";
 
             int id = v.getId();
-            if (id == R.id.btn_1d) {
+            if (id == R.id.btn_conservative) {
                 selectedInterval = "1D";
-            } else if (id == R.id.btn_5d) {
+            } else if (id == R.id.btn_moderate) {
                 selectedInterval = "5D";
-            } else if (id == R.id.btn_1m) {
+            } else if (id == R.id.btn_aggressive) {
                 selectedInterval = "1M";
-            } else if (id == R.id.btn_6m) {
+            } else if (id == R.id.btn_reload) {
                 selectedInterval = "6M";
             } else if (id == R.id.btn_ytd) {
                 selectedInterval = "YTD";

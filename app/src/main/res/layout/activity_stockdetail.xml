@@ -57,7 +57,7 @@
                 android:layout_marginTop="16dp" />
 
             <LinearLayout
-                android:id="@+id/timeFilterButtons"
+                android:id="@+id/aiFilterTime"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="8dp"
@@ -149,6 +149,67 @@
                     android:text="ALL"
                     android:textAllCaps="false"
                     android:textColor="@color/button_color" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/aiFilterButtons"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/view_background"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_conservative"
+                    android:layout_width="11dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:minWidth="48dp"
+                    android:padding="4dp"
+                    android:text="Conservative"
+                    android:textAllCaps="false"
+                    android:textColor="@color/button_color" />
+
+                <Button
+                    android:id="@+id/btn_moderate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:minWidth="48dp"
+                    android:padding="4dp"
+                    android:text="Moderate"
+                    android:textAllCaps="false"
+                    android:textColor="@color/button_color" />
+
+                <Button
+                    android:id="@+id/btn_aggressive"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:minWidth="48dp"
+                    android:padding="4dp"
+                    android:text="Aggrerssive"
+                    android:textAllCaps="false"
+                    android:textColor="@color/button_color" />
+
+                <Button
+                    android:id="@+id/btn_reload"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:minWidth="48dp"
+                    android:padding="4dp"
+                    android:text="Reload"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_color" />
+
+
             </LinearLayout>
 
             <TextView
