@@ -1,8 +1,10 @@
 package com.example.equion;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,14 +18,17 @@ import java.io.BufferedReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+
+import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.data.*;
+import com.example.equion.BuildConfig;
 
 public class StockDetailActivity extends AppCompatActivity {
 
     private CombinedChart combinedChart;
     private TextView aiAnalysisTitle, aiAnalysisContent;
     private Button btn1d, btn5d, btn1m, btn6m, btnYtd, btn1y, btnAll;
-    private Button backButton;
+    private ImageButton backButton;
 
     private TextView companyNameText;
     private TextView stockDetailPriceText;
@@ -148,7 +153,88 @@ public class StockDetailActivity extends AppCompatActivity {
 
     private void setupAISection() {
         aiAnalysisTitle.setText("AI 分析与交易建议");
-        aiAnalysisContent.setText("（未来将在此处展示基于最新新闻和市场走势生成的交易建议）");
+        aiAnalysisContent.setText("生成中...");
+        fetchAIAnalysis();
+    }
+
+    private void fetchAIAnalysis() {
+        new AsyncTask<Void, Void, String>() {
+            protected String doInBackground(Void... voids) {
+                try {
+                    // 获取最近 2 周日期范围
+                    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+                    java.util.Calendar cal = java.util.Calendar.getInstance();
+                    String toDate = sdf.format(cal.getTime());
+                    cal.add(java.util.Calendar.DAY_OF_MONTH, -14);
+                    String fromDate = sdf.format(cal.getTime());
+
+                    // 请求 Finnhub 新闻数据
+                    String newsUrl = "https://finnhub.io/api/v1/company-news?symbol=" + symbol +
+                                     "&from=" + fromDate + "&to=" + toDate +
+                                     "&token=d09lgfpr01qnv9cjnpl0d09lgfpr01qnv9cjnplg";
+                    URL newsApiUrl = new URL(newsUrl);
+                    HttpURLConnection newsConn = (HttpURLConnection) newsApiUrl.openConnection();
+                    newsConn.setRequestMethod("GET");
+
+                    BufferedReader newsReader = new BufferedReader(new InputStreamReader(newsConn.getInputStream()));
+                    StringBuilder newsResult = new StringBuilder();
+                    String line;
+                    while ((line = newsReader.readLine()) != null) newsResult.append(line);
+                    newsReader.close();
+
+                    JSONArray newsArray = new JSONArray(newsResult.toString());
+                    StringBuilder newsBlock = new StringBuilder();
+                    for (int i = 0; i < Math.min(newsArray.length(), 5); i++) {
+                        JSONObject newsItem = newsArray.getJSONObject(i);
+                        newsBlock.append("- ").append(newsItem.getString("headline")).append("\n");
+                    }
+
+                    String prompt = name + " (" + symbol + ") 股票近期新闻如下：\n" + newsBlock +
+                            "\n请基于以上内容生成一条简洁明了的投资建议（100-200字）。";
+
+                    JSONObject requestJson = new JSONObject();
+                    JSONArray contents = new JSONArray();
+                    JSONObject part = new JSONObject();
+                    part.put("text", prompt);
+                    JSONArray parts = new JSONArray();
+                    parts.put(part);
+                    JSONObject content = new JSONObject();
+                    content.put("parts", parts);
+                    contents.put(content);
+                    requestJson.put("contents", contents);
+
+                    String API_KEY = BuildConfig.GEMINI_API_KEY;
+                    URL url = new URL("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + API_KEY);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setDoOutput(true);
+                    conn.getOutputStream().write(requestJson.toString().getBytes("UTF-8"));
+
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuilder result = new StringBuilder();
+                    while ((line = reader.readLine()) != null) result.append(line);
+                    reader.close();
+
+                    JSONObject response = new JSONObject(result.toString());
+                    return response
+                            .getJSONArray("candidates")
+                            .getJSONObject(0)
+                            .getJSONObject("content")
+                            .getJSONArray("parts")
+                            .getJSONObject(0)
+                            .getString("text");
+
+                } catch (Exception e) {
+                    Log.e("GeminiAI", "AI分析失败", e);
+                    return "生成失败，请稍后重试。";
+                }
+            }
+
+            protected void onPostExecute(String responseText) {
+                aiAnalysisContent.setText(responseText);
+            }
+        }.execute();
     }
 
     private void fetchQuote() {
@@ -218,11 +304,31 @@ public class StockDetailActivity extends AppCompatActivity {
                 lineDataSet.setDrawCircles(false);
                 lineDataSet.setLineWidth(2f);
                 lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+                lineDataSet.setDrawValues(false);
+                lineDataSet.setHighlightEnabled(true);
+                lineDataSet.setDrawHorizontalHighlightIndicator(false);
+                lineDataSet.setDrawVerticalHighlightIndicator(true);
 
                 LineData lineData = new LineData(lineDataSet);
                 CombinedData data = new CombinedData();
                 data.setData(lineData);
                 combinedChart.setData(data);
+
+                combinedChart.getDescription().setEnabled(false);
+                combinedChart.getAxisLeft().setEnabled(false);
+                combinedChart.getAxisRight().setEnabled(true);
+                combinedChart.getAxisRight().setDrawGridLines(false);
+                combinedChart.getXAxis().setEnabled(false);
+                combinedChart.getLegend().setEnabled(false);
+
+                combinedChart.setTouchEnabled(true);
+                combinedChart.setHighlightPerTapEnabled(true);
+                combinedChart.setHighlightPerDragEnabled(true);
+
+                MarkerView marker = new StockMarkerView(StockDetailActivity.this, R.layout.marker_view_layout, entries);
+                marker.setChartView(combinedChart);
+                combinedChart.setMarker(marker);
+
                 combinedChart.invalidate();
             }
         }.execute();

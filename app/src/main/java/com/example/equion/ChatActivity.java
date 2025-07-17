@@ -30,7 +30,7 @@ public class ChatActivity extends AppCompatActivity {
     private LinearLayout chatContainer;
     // private static final String API_KEY = "";
     String API_KEY = BuildConfig.GEMINI_API_KEY;
-    private final String ENDPOINT = "https://generativelanguage.googleapis.com/v1/models/gemini-1.0-flash:generateContent?key=" + API_KEY;
+    private final String ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + API_KEY;
     private final OkHttpClient client = new OkHttpClient();
 
     @Override
@@ -69,7 +69,7 @@ public class ChatActivity extends AppCompatActivity {
         sendButton.setOnClickListener(v -> {
             String userText = userInput.getText().toString().trim();
             if (!userText.isEmpty()) {
-                addMessage("\ud83e\udd16 You: " + userText, true);
+                addMessage("You: " + userText, true);
                 userInput.setText("");
                 scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
                 fetchGeminiReply(userText);
@@ -158,6 +158,15 @@ public class ChatActivity extends AppCompatActivity {
         message.setPadding(24, 16, 24, 16);
         message.setTextColor(Color.BLACK);
         message.setTextAlignment(isUser ? View.TEXT_ALIGNMENT_TEXT_END : View.TEXT_ALIGNMENT_TEXT_START);
+        message.setBackgroundResource(isUser ? R.drawable.user_bubble : R.drawable.ai_bubble);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(24, 12, 24, 12);
+        params.gravity = isUser ? android.view.Gravity.END : android.view.Gravity.START;
+        message.setLayoutParams(params);
 
         chatContainer.addView(message);
     }

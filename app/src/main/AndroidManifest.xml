@@ -20,7 +20,8 @@
 
         </activity>
 
-        <activity android:name=".StockDetailActivity"
+        <activity
+            android:name=".StockDetailActivity"
             android:exported="true">
 
         </activity>

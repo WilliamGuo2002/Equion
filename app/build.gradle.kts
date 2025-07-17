@@ -16,7 +16,7 @@ android {
         versionName = "1.0"
 
         val geminiApiKey: String = project.findProperty("GEMINI_API_KEY") as? String ?: ""
-        buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
+        buildConfigField("String", "GEMINI_API_KEY", "\"AIzaSyBkTysGhs1wLE3WQJfBwLkeKgaoo5ZaDQ8\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
