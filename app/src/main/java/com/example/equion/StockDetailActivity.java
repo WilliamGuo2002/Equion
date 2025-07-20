@@ -34,6 +34,8 @@ public class StockDetailActivity extends AppCompatActivity {
     private String symbol;
     private String name;
 
+    private String currentTone = "moderate";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,15 +56,51 @@ public class StockDetailActivity extends AppCompatActivity {
 
         // by clicking back button
         backButton.setOnClickListener(v -> finish());
+
+        currentTone = "moderate";
+        fetchAIAnalysis(currentTone);
+        // Set moderate as selected initially
+        btnModerate.setTextColor(getResources().getColor(R.color.text_color));
+        btnConservative.setTextColor(getResources().getColor(R.color.button_color));
+        btnAggressive.setTextColor(getResources().getColor(R.color.button_color));
+
+        btnConservative.setOnClickListener(v -> {
+            aiAnalysisContent.setText("生成中...");
+            currentTone = "conservative";
+            btnConservative.setTextColor(getResources().getColor(R.color.text_color));
+            btnModerate.setTextColor(getResources().getColor(R.color.button_color));
+            btnAggressive.setTextColor(getResources().getColor(R.color.button_color));
+            fetchAIAnalysis(currentTone);
+        });
+        btnModerate.setOnClickListener(v -> {
+            aiAnalysisContent.setText("生成中...");
+            currentTone = "moderate";
+            btnModerate.setTextColor(getResources().getColor(R.color.text_color));
+            btnConservative.setTextColor(getResources().getColor(R.color.button_color));
+            btnAggressive.setTextColor(getResources().getColor(R.color.button_color));
+            fetchAIAnalysis(currentTone);
+        });
+        btnAggressive.setOnClickListener(v -> {
+            aiAnalysisContent.setText("生成中...");
+            currentTone = "aggressive";
+            btnAggressive.setTextColor(getResources().getColor(R.color.text_color));
+            btnModerate.setTextColor(getResources().getColor(R.color.button_color));
+            btnConservative.setTextColor(getResources().getColor(R.color.button_color));
+            fetchAIAnalysis(currentTone);
+        });
+        btnReload.setOnClickListener(v -> {
+            aiAnalysisContent.setText("生成中...");
+            fetchAIAnalysis(currentTone);
+        });
     }
 
     private void initViews() {
         combinedChart = findViewById(R.id.stockCombinedChart);
 
-        btn1d = findViewById(R.id.btn_conservative);
-        btn5d = findViewById(R.id.btn_moderate);
-        btn1m = findViewById(R.id.btn_aggressive);
-        btn6m = findViewById(R.id.btn_reload);
+        btn1d = findViewById(R.id.btn_1d);
+        btn5d = findViewById(R.id.btn_5d);
+        btn1m = findViewById(R.id.btn_1m);
+        btn6m = findViewById(R.id.btn_6m);
         btnYtd = findViewById(R.id.btn_ytd);
         btn1y = findViewById(R.id.btn_1y);
         btnAll = findViewById(R.id.btn_all);
@@ -157,21 +195,20 @@ public class StockDetailActivity extends AppCompatActivity {
     private void setupAISection() {
         aiAnalysisTitle.setText("AI 分析与交易建议");
         aiAnalysisContent.setText("生成中...");
-        fetchAIAnalysis();
+        fetchAIAnalysis(currentTone);
     }
 
-    private void fetchAIAnalysis() {
+    private void fetchAIAnalysis(String tone) {
         new AsyncTask<Void, Void, String>() {
+            private String headlines = "";
             protected String doInBackground(Void... voids) {
                 try {
-                    // 获取最近 2 周日期范围
                     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
                     java.util.Calendar cal = java.util.Calendar.getInstance();
                     String toDate = sdf.format(cal.getTime());
                     cal.add(java.util.Calendar.DAY_OF_MONTH, -14);
                     String fromDate = sdf.format(cal.getTime());
 
-                    // 请求 Finnhub 新闻数据
                     String newsUrl = "https://finnhub.io/api/v1/company-news?symbol=" + symbol +
                                      "&from=" + fromDate + "&to=" + toDate +
                                      "&token=d09lgfpr01qnv9cjnpl0d09lgfpr01qnv9cjnplg";
@@ -191,9 +228,16 @@ public class StockDetailActivity extends AppCompatActivity {
                         JSONObject newsItem = newsArray.getJSONObject(i);
                         newsBlock.append("- ").append(newsItem.getString("headline")).append("\n");
                     }
+                    // Add headlines string for display
+                    headlines = "近期相关新闻:\n" + newsBlock.toString() + "\n";
 
                     String prompt = name + " (" + symbol + ") 股票近期新闻如下：\n" + newsBlock +
                             "\n请基于以上内容生成一条简洁明了的投资建议（100-200字）。";
+                    if (tone.equals("conservative")) {
+                        prompt += "\n请给出偏保守的投资建议。";
+                    } else if (tone.equals("aggressive")) {
+                        prompt += "\n请给出偏激进的投资建议。";
+                    }
 
                     JSONObject requestJson = new JSONObject();
                     JSONArray contents = new JSONArray();
@@ -235,7 +279,7 @@ public class StockDetailActivity extends AppCompatActivity {
             }
 
             protected void onPostExecute(String responseText) {
-                aiAnalysisContent.setText(responseText);
+                aiAnalysisContent.setText(headlines + responseText);
             }
         }.execute();
     }
