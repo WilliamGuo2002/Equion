@@ -3,6 +3,7 @@ package com.example.equion;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -14,9 +15,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -61,6 +66,11 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                Toast.makeText(LoginActivity.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -68,8 +78,21 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 if (user != null) {
-                                    FirestoreController controller = new FirestoreController(user.getUid());
-                                    controller.initUserIfFirstTime(user.getEmail());
+                                    //FirestoreController controller = new FirestoreController(user.getUid());
+                                    //controller.initUserIfFirstTime(user.getEmail());
+                                    FirebaseController controller = FirebaseController.getInstance();
+                                    if (controller.getUserDoc() != null) {
+                                        controller.getUserDoc().get().addOnSuccessListener(doc -> {
+                                            if (!doc.exists()) {
+                                                Map<String, Object> data = new HashMap<>();
+                                                data.put("email", email);
+                                                data.put("username", email.split("@")[0]);
+                                                data.put("avatarUrl", "");
+                                                data.put("createdAt", Timestamp.now());
+                                                controller.getUserDoc().set(data);
+                                            }
+                                        });
+                                    }
 
                                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(LoginActivity.this, MyholdingActivity.class);

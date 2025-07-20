@@ -1,4 +1,7 @@
 package com.example.equion;
+import java.util.HashMap;
+import java.util.Map;
+import com.google.firebase.Timestamp;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -56,6 +59,8 @@ import com.example.equion.StockAdapter;
 import com.example.equion.StockInfo;
 import com.github.mikephil.charting.data.Entry;
 import android.view.ViewGroup;
+
+import com.example.equion.FirebaseController;
 
 public class MyholdingActivity extends AppCompatActivity {
 
@@ -171,6 +176,17 @@ public class MyholdingActivity extends AppCompatActivity {
             }
         });
 
+        // Load existing watchlist from Firestore
+        FirebaseController controller = FirebaseController.getInstance();
+        if (controller.getWatchlistRef() != null) {
+            controller.getWatchlistRef().get().addOnSuccessListener(snapshot -> {
+                for (var doc : snapshot.getDocuments()) {
+                    String symbol = doc.getId();
+                    fetchStockData(symbol);
+                }
+            });
+        }
+
         // 添加拖拽排序和左滑删除功能
         ItemTouchHelper.SimpleCallback itemTouchCallback = new ItemTouchHelper.SimpleCallback(
                 ItemTouchHelper.UP | ItemTouchHelper.DOWN,
@@ -184,6 +200,15 @@ public class MyholdingActivity extends AppCompatActivity {
                 int toPosition = target.getAdapterPosition();
                 Collections.swap(stockList, fromPosition, toPosition);
                 adapter.notifyItemMoved(fromPosition, toPosition);
+                // Update order in Firestore
+                FirebaseController controller = FirebaseController.getInstance();
+                if (controller.getWatchlistRef() != null) {
+                    for (int i = 0; i < stockList.size(); i++) {
+                        Map<String, Object> data = new HashMap<>();
+                        data.put("addedAt", Timestamp.now());
+                        controller.getWatchlistRef().document(stockList.get(i).symbol).set(data);
+                    }
+                }
                 return true;
             }
 
@@ -192,6 +217,14 @@ public class MyholdingActivity extends AppCompatActivity {
                 int position = viewHolder.getAdapterPosition();
                 stockList.get(position).swiped = true;
                 adapter.notifyItemChanged(position);
+                // Remove from Firestore
+                String removedSymbol = stockList.get(position).symbol;
+                FirebaseController controller = FirebaseController.getInstance();
+                if (controller.getWatchlistRef() != null) {
+                    controller.getWatchlistRef().document(removedSymbol).delete();
+                }
+                stockList.remove(position);
+                adapter.notifyItemRemoved(position);
             }
 
             @Override
@@ -393,6 +426,13 @@ public class MyholdingActivity extends AppCompatActivity {
                                             runOnUiThread(() -> {
                                                 stockList.add(new StockInfo(symbol, name, price, changePercent, entries));
                                                 adapter.notifyItemInserted(stockList.size() - 1);
+                                                // Add to Firestore watchlist
+                                                FirebaseController controller = FirebaseController.getInstance();
+                                                if (controller.getWatchlistRef() != null) {
+                                                    Map<String, Object> data = new HashMap<>();
+                                                    data.put("addedAt", Timestamp.now());
+                                                    controller.getWatchlistRef().document(symbol).set(data);
+                                                }
                                             });
 
                                         } catch (Exception e) {

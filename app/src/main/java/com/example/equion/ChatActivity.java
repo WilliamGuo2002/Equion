@@ -17,6 +17,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.google.firebase.Timestamp;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -32,11 +38,15 @@ public class ChatActivity extends AppCompatActivity {
     String API_KEY = BuildConfig.GEMINI_API_KEY;
     private final String ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + API_KEY;
     private final OkHttpClient client = new OkHttpClient();
+    private List<Map<String, String>> currentChatMessages = new ArrayList<>();
+    private String chatId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        chatId = String.valueOf(System.currentTimeMillis());
 
         ImageButton homeButton = findViewById(R.id.chat_home_button);
         ImageButton newsButton = findViewById(R.id.chat_news_button);
@@ -72,12 +82,23 @@ public class ChatActivity extends AppCompatActivity {
                 addMessage("You: " + userText, true);
                 userInput.setText("");
                 scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
+                Map<String, String> msg = new HashMap<>();
+                msg.put("role", "user");
+                msg.put("content", userText);
+                currentChatMessages.add(msg);
+                FirebaseController.getInstance().saveChatMessage(chatId, currentChatMessages);
                 fetchGeminiReply(userText);
             }
         });
 
         // delete chat
-        clearButton.setOnClickListener(v -> chatContainer.removeAllViews());
+        clearButton.setOnClickListener(v -> {
+            chatContainer.removeAllViews();
+            currentChatMessages.clear();
+            if (FirebaseController.getInstance().getChatHistoryRef() != null) {
+                FirebaseController.getInstance().getChatHistoryRef().document(chatId).delete();
+            }
+        });
     }
 
     private void fetchGeminiReply(String userText) {
@@ -138,6 +159,12 @@ public class ChatActivity extends AppCompatActivity {
                             String reply = parts.getJSONObject(0).getString("text");
 
                             runOnUiThread(() -> addMessage("\ud83e\udd16 Orion: " + reply, false));
+
+                            Map<String, String> aiMsg = new HashMap<>();
+                            aiMsg.put("role", "ai");
+                            aiMsg.put("content", reply);
+                            currentChatMessages.add(aiMsg);
+                            FirebaseController.getInstance().saveChatMessage(chatId, currentChatMessages);
                         } catch (Exception e) {
                             runOnUiThread(() -> addMessage("\u274c Orion: 解析回复失败。", false));
                         }
