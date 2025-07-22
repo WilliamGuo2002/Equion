@@ -50,6 +50,7 @@ public class NewsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(NewsActivity.this, MyholdingActivity.class);
                 startActivity(intent);
+                overridePendingTransition(0, 0);  // 禁用切换动画
             }
         });
         // By clicking Chat button
@@ -58,6 +59,7 @@ public class NewsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(NewsActivity.this, ChatActivity.class);
                 startActivity(intent);
+                overridePendingTransition(0, 0);  // 禁用切换动画
             }
         });
         // By clicking Menu button
@@ -66,6 +68,7 @@ public class NewsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(NewsActivity.this, MenuActivity.class);
                 startActivity(intent);
+                overridePendingTransition(0, 0);  // 禁用切换动画
             }
         });
         // By clicking Back button

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.data.*;
 
+
 public class StockDetailActivity extends AppCompatActivity {
 
     private CombinedChart combinedChart;
@@ -42,6 +43,9 @@ public class StockDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stockdetail);
 
         initViews();
+
+        // Use fade in/out animation on entry
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
         symbol = getIntent().getStringExtra("symbol");
         name = getIntent().getStringExtra("name");
@@ -379,5 +383,10 @@ public class StockDetailActivity extends AppCompatActivity {
                 combinedChart.invalidate();
             }
         }.execute();
+    }
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }

@@ -62,16 +62,19 @@ public class ChatActivity extends AppCompatActivity {
         homeButton.setOnClickListener(view -> {
             Intent intent = new Intent(ChatActivity.this, MyholdingActivity.class);
             startActivity(intent);
+            overridePendingTransition(0, 0);  // 禁用切换动画
         });
         // By clicking News button
         newsButton.setOnClickListener(view -> {
             Intent intent = new Intent(ChatActivity.this, NewsActivity.class);
             startActivity(intent);
+            overridePendingTransition(0, 0);  // 禁用切换动画
         });
         // By clicking Menu button
         menuButton.setOnClickListener(view -> {
             Intent intent = new Intent(ChatActivity.this, MenuActivity.class);
             startActivity(intent);
+            overridePendingTransition(0, 0);  // 禁用切换动画
         });
 
 

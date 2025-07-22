@@ -173,6 +173,7 @@ public class MyholdingActivity extends AppCompatActivity {
                 intent.putExtra("symbol", stock.symbol);
                 intent.putExtra("name", stock.name);
                 startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
 
@@ -289,6 +290,7 @@ public class MyholdingActivity extends AppCompatActivity {
                 // For example, start a new activity or show a dialog
                 Intent intent = new Intent(MyholdingActivity.this, NewsActivity.class);
                 startActivity(intent);
+                overridePendingTransition(0, 0);  // 禁用切换动画
             }
         });
         // By clicking Chat button
@@ -299,6 +301,7 @@ public class MyholdingActivity extends AppCompatActivity {
                 // For example, start a new activity or show a dialog
                 Intent intent = new Intent(MyholdingActivity.this, ChatActivity.class);
                 startActivity(intent);
+                overridePendingTransition(0, 0);  // 禁用切换动画
             }
         });
         // By clicking Menu button
@@ -309,6 +312,7 @@ public class MyholdingActivity extends AppCompatActivity {
                 // For example, start a new activity or show a dialog
                 Intent intent = new Intent(MyholdingActivity.this, MenuActivity.class);
                 startActivity(intent);
+                overridePendingTransition(0, 0);  // 禁用切换动画
             }
         });
 

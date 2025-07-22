@@ -45,21 +45,27 @@ public class MenuActivity extends AppCompatActivity {
         homeButton.setOnClickListener(v -> {
             // Navigate to HomeActivity
             startActivity(new Intent(MenuActivity.this, MyholdingActivity.class));
+            overridePendingTransition(0, 0);
             finish(); // Close MenuActivity
+            overridePendingTransition(0, 0);
         });
 
         // by clicking news button
         newsButton.setOnClickListener(v -> {
             // Navigate to NewsActivity
             startActivity(new Intent(MenuActivity.this, NewsActivity.class));
+            overridePendingTransition(0, 0);
             finish(); // Close MenuActivity
+            overridePendingTransition(0, 0);
         });
 
         // by clicking chat button
         chatButton.setOnClickListener(v -> {
             // Navigate to ChatActivity
             startActivity(new Intent(MenuActivity.this, ChatActivity.class));
+            overridePendingTransition(0, 0);
             finish(); // Close MenuActivity
+            overridePendingTransition(0, 0);
         });
     }
 
