@@ -1,6 +1,273 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".MyholdingActivity"
+    android:background="@drawable/background_gradient">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toTopOf="@id/menu_navbar_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"></Space>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/menu_profile_pic"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:scaleType="centerCrop"
+                android:src="@drawable/defaultprofilepic"
+                app:shapeAppearanceOverlay="@style/CircleImage" />
+
+
+            <TextView
+                android:id="@+id/menu_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="User"
+                android:textColor="@color/text_color"
+                android:textSize="30dp"></TextView>
+
+            <TextView
+                android:id="@+id/menu_user_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="exampleemail@abcd.com"
+                android:textColor="@color/button_color"
+                android:textSize="15dp"></TextView>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"></Space>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/view_background"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/menu_edit_profile_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:textColor="@color/text_color"
+                    android:background="@drawable/ripple_effect"
+                    android:text="Edit Profile"
+                    android:gravity="start|center_vertical" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp"></Space>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/view_background"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/menu_appearance_setting_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:textColor="@color/text_color"
+                    android:background="@drawable/ripple_effect"
+                    android:text="Appearance Settings"
+                    android:gravity="start|center_vertical" />
+
+                <Button
+                    android:id="@+id/menu_notification_setting_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:textColor="@color/text_color"
+                    android:background="@drawable/ripple_effect"
+                    android:text="Notification Settings"
+                    android:gravity="start|center_vertical" />
+
+                <Button
+                    android:id="@+id/menu_share_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:textColor="@color/text_color"
+                    android:background="@drawable/ripple_effect"
+                    android:text="Share Equion"
+                    android:gravity="start|center_vertical" />
+
+                <Button
+                    android:id="@+id/menu_support_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:textColor="@color/text_color"
+                    android:background="@drawable/ripple_effect"
+                    android:text="Support Us"
+                    android:gravity="start|center_vertical" />
+
+                <Button
+                    android:id="@+id/menu_contact_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:textColor="@color/text_color"
+                    android:background="@drawable/ripple_effect"
+                    android:text="Contact Us"
+                    android:gravity="start|center_vertical" />
+
+
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp"></Space>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/view_background"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/menu_copyrightinfo_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/ripple_effect"
+                    android:gravity="start|center_vertical"
+                    android:text="Copyright Information"
+                    android:textColor="@color/text_color" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp"></Space>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/view_background"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/menu_logout_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/ripple_effect"
+                        android:gravity="start|center_vertical"
+                        android:text="Logout"
+                        android:textColor="@color/warning_color" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/menu_navbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/view_background"
+        android:elevation="100dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="8dp"
+        android:translationZ="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/menu_home_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ripple_effect"
+            android:scaleType="centerInside"
+            android:src="@drawable/home" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/menu_news_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ripple_effect"
+            android:scaleType="centerInside"
+            android:src="@drawable/news" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/menu_chat_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ripple_effect"
+            android:scaleType="centerInside"
+            android:src="@drawable/chat" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/menu_menu_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ripple_effect"
+            android:scaleType="centerInside"
+            android:src="@drawable/menuselected" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

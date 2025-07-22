@@ -5,4 +5,5 @@
     <color name="ui_background">#80EFEFEF</color>
     <color name="button_color">#919191</color>
     <color name="text_color">#101010</color>
+    <color name="warning_color">#FF0000</color>
 </resources>
