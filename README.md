@@ -1,6 +1,6 @@
-# Equion · AI-Powered US Stock Assistant
+# Orion · AI-Powered US Stock Assistant
 
-**Equion** is a lightweight, AI-integrated mobile application designed to help individual investors track U.S. stock holdings, follow market news, and ask intelligent questions powered by Gemini. Built with simplicity, accuracy, and intelligent assistance in mind.
+**Orion** is a lightweight, AI-integrated mobile application designed to help individual investors track U.S. stock holdings, follow market news, and ask intelligent questions powered by Gemini. Built with simplicity, accuracy, and intelligent assistance in mind.
 
 ## 🧩 Features
 
@@ -40,9 +40,9 @@ This is a **private project** and not yet open-source. For collaboration inquiri
 
 -----------------------------------------------
 
-# Equion · 智能的美股助手
+# Orion · 智能的美股助手
 
-Equion 是一个结合 AI 的美股持仓管理与智能分析工具，面向个人投资者设计，旨在提供简洁、高效、智能的股票记录与决策支持体验。
+Orion 是一个结合 AI 的美股持仓管理与智能分析工具，面向个人投资者设计，旨在提供简洁、高效、智能的股票记录与决策支持体验。
 
 ## 🧩 功能特性 Features
 
